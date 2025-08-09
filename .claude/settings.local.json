@@ -5,7 +5,9 @@
       "WebFetch(domain:github.com)",
       "WebFetch(domain:github.com)",
       "Bash(mkdir:*)",
-      "Bash(dxt pack:*)"
+      "Bash(dxt pack:*)",
+      "Bash(npm test)",
+      "Bash(timeout:*)"
     ],
     "deny": []
   }
