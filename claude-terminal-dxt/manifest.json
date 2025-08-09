@@ -1,0 +1,26 @@
+{
+  "dxt_version": "0.1",
+  "name": "terminal-for-claude",
+  "display_name": "Terminal for Claude",
+  "version": "1.0.0",
+  "description": "Provides Claude with full terminal access for executing commands and scripts",
+  "long_description": "This extension gives Claude Desktop comprehensive terminal access, allowing it to:\n- Execute shell commands and scripts\n- Run interactive processes\n- Access file systems\n- Manage processes and services\n- Perform system administration tasks\n\n**Security Note**: This extension provides full system access. Only use with trusted Claude instances.",
+  "author": {
+    "name": "Claude Terminal Extension Team"
+  },
+  "license": "MIT",
+  "icon": "assets/icon.png",
+  "keywords": ["terminal", "shell", "command", "execution", "system", "admin"],
+  "server": {
+    "type": "node",
+    "entry_point": "src/server.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/src/server.js"]
+    }
+  },
+  "compatibility": {
+    "platforms": ["win32", "darwin", "linux"],
+    "node_version": ">=18.0.0"
+  }
+}

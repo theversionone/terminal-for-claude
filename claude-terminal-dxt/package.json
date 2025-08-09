@@ -1,0 +1,31 @@
+{
+  "name": "claude-terminal-dxt",
+  "version": "1.0.0",
+  "description": "A Claude Desktop Extension that provides full terminal access and command execution capabilities",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --inspect src/server.js",
+    "test": "node test/test.js"
+  },
+  "keywords": [
+    "claude",
+    "terminal",
+    "shell",
+    "command",
+    "execution",
+    "dxt",
+    "mcp"
+  ],
+  "author": {
+    "name": "Claude Terminal Extension"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
