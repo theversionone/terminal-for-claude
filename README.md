@@ -12,7 +12,7 @@
 
 ## Overview
 
-A powerful Desktop Extension for Claude that provides comprehensive terminal access and command execution capabilities. Built with a modular architecture for easy extensibility and maintenance.
+A powerful Desktop Extension for Claude that provides comprehensive terminal access and command execution capabilities. Built with a modular architecture for easy extensibility and maintenance!
 
 ## 🚨 Security Warning
 
