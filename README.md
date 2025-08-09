@@ -1,7 +1,7 @@
 # Claude Terminal Desktop Extension (DXT)
 
 <div align="center">
-  <img src="assets/icon.png" alt="Claude Terminal Extension Icon" width="128" height="128">
+  <img src="terminal-for-claude/assets/icon.png" alt="Claude Terminal Extension Icon" width="128" height="128">
   
   **Full terminal access for Claude Desktop**
   
