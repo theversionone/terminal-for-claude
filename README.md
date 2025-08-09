@@ -32,6 +32,8 @@ Only use with trusted Claude instances and carefully review all commands before 
 - **📜 Script Execution** - Execute scripts in multiple languages (Python, Node.js, Bash, PowerShell, etc.)
 - **📊 Process Management** - List, filter, and terminate running processes
 - **💻 System Information** - Retrieve comprehensive system details
+- **📁 File Operations** - Read, write, copy, move, and delete files with rich metadata
+- **📂 Directory Management** - Create, list, and manage directories with detailed summaries
 - **🌍 Cross-Platform** - Full support for Windows, macOS, and Linux
 
 ### Technical Features
@@ -75,7 +77,9 @@ dxt pack .
 
 ## 🛠️ Available Tools
 
-### 1. execute_command
+### Core System Tools
+
+#### 1. execute_command
 Execute shell commands with full control over execution environment.
 
 **Example:**
@@ -89,7 +93,7 @@ Claude, run "git status" to check the repository status
 - `timeout` - Max execution time (default: 30s, max: 300s)
 - `environment` - Custom environment variables
 
-### 2. execute_script
+#### 2. execute_script
 Run scripts with specified interpreters.
 
 **Example:**
@@ -106,7 +110,7 @@ print(f"Current directory: {os.getcwd()}")
 - `node` - JavaScript/Node.js
 - `perl`, `ruby` - Other scripting languages
 
-### 3. get_system_info
+#### 3. get_system_info
 Retrieve detailed system information.
 
 **Returns:**
@@ -117,20 +121,87 @@ Retrieve detailed system information.
 - Environment variables count
 - System directories
 
-### 4. list_processes
+### Process Management Tools
+
+#### 4. list_processes
 List and filter running processes.
 
 **Parameters:**
 - `filter` - Regex pattern to filter processes
 - `limit` - Max processes to return (default: 50, max: 500)
 
-### 5. kill_process
+#### 5. kill_process
 Terminate processes safely.
 
 **Parameters:**
 - `pid` (required) - Process ID to terminate
 - `force` - Force kill if normal termination fails
 - `signal` - Specific signal to send (SIGTERM, SIGKILL, etc.)
+
+### File Operation Tools 
+
+#### 6. file_read
+Read file contents with comprehensive metadata - better than `cat`/`type`.
+
+**Example:**
+```
+Claude, read the package.json file and analyze the dependencies
+```
+
+**Parameters:**
+- `file_path` (required) - Path to file to read
+- `encoding` - File encoding (default: utf8)
+
+**Returns:**
+- File content with metadata
+- File statistics and permissions
+- Content type detection
+- Size and modification info
+
+#### 7. file_write
+Write content to files with safety features - better than shell redirection.
+
+**Example:**
+```
+Claude, create a new config file with these settings: {...}
+```
+
+**Parameters:**
+- `file_path` (required) - Path to file to write
+- `content` (required) - Content to write
+- `encoding` - File encoding (default: utf8)
+- `create_directories` - Create parent directories
+- `backup` - Create backup before overwriting
+
+#### 8. file_operations
+Perform file operations (copy, move, delete) - safer than `cp`/`mv`/`rm`.
+
+**Example:**
+```
+Claude, make a backup copy of important.txt before we modify it
+```
+
+**Parameters:**
+- `operation` (required) - copy, move, or delete
+- `source` (required) - Source file path
+- `destination` - Destination path (for copy/move)
+- `overwrite` - Allow overwriting existing files
+- `force` - Force operation (for delete)
+
+#### 9. directory_operations
+Manage directories with detailed information - better than `mkdir`/`ls`/`rmdir`.
+
+**Example:**
+```
+Claude, list all files in the src directory and give me a summary
+```
+
+**Parameters:**
+- `operation` (required) - create, list, delete, or exists
+- `path` (required) - Directory path
+- `recursive` - Create/delete recursively
+- `include_hidden` - Include hidden files in listings
+- `detailed` - Include file metadata in listings
 
 ## 🏗️ Architecture
 
@@ -146,9 +217,14 @@ claude-terminal-dxt/
 │   │   ├── execute-command.js # Command execution tool
 │   │   ├── execute-script.js  # Script execution tool
 │   │   ├── system-info.js     # System information tool
-│   │   └── process-manager.js # Process management tools
+│   │   ├── process-manager.js # Process management tools
+│   │   ├── file-read.js       # File reading tool
+│   │   ├── file-write.js      # File writing tool
+│   │   ├── file-operations.js # File copy/move/delete tool
+│   │   └── directory-operations.js # Directory management tool
 │   ├── utils/                 # Utility functions
-│   │   └── command-utils.js   # Command execution helpers
+│   │   ├── command-utils.js   # Command execution helpers
+│   │   └── file-utils.js      # File system utilities
 │   └── config/                # Configuration
 │       ├── constants.js       # Application constants
 │       └── config-manager.js  # Runtime configuration
@@ -274,19 +350,24 @@ Contributions are welcome! Please:
 ## 📊 Version History
 
 ### v1.0.0 (Current)
-- ✅ Modular architecture with tool registry
-- ✅ Enhanced error handling and reporting
-- ✅ Configuration management system
-- ✅ Cross-platform compatibility
-- ✅ Comprehensive security controls
-- ✅ Five core tools for terminal access
+- ✅ **Modular Architecture** - Clean tool registry system with base classes
+- ✅ **Enhanced Error Handling** - Comprehensive error reporting with execution timing
+- ✅ **Configuration Management** - Runtime configuration without code changes
+- ✅ **Cross-Platform Support** - Full compatibility with Windows, macOS, and Linux
+- ✅ **Security Controls** - Timeouts, buffer limits, path validation, and permission checks
+- ✅ **9 Comprehensive Tools** - Complete terminal and file system access
+
+#### Tool Categories:
+- **System Tools** (3): Command execution, script running, system information
+- **Process Management** (2): List and terminate processes
+- **File Operations** (4): Read, write, copy/move/delete files, directory management
 
 ### Planned Features
-- 🔄 File operation tools
-- 🔄 Network diagnostic tools  
-- 🔄 Service management
-- 🔄 Git integration
-- 🔄 Package manager support
+- 🔄 **Network Diagnostic Tools** - Ping, netstat, connection testing
+- 🔄 **Service Management** - Start/stop/restart system services
+- 🔄 **Git Integration** - Structured git operations with rich output
+- 🔄 **Package Manager Support** - npm, pip, cargo, apt operations
+- 🔄 **Environment Management** - Variable manipulation and virtual environments
 
 ---
 

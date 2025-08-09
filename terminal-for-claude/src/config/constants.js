@@ -35,4 +35,31 @@ export const TIMEOUTS = {
   SCRIPT: 60000,
   PROCESS: 10000,
   KILL: 5000,
+  FILE_READ: 10000,
+  FILE_WRITE: 30000,
+  FILE_OPERATION: 30000,
+  DIRECTORY_OPERATION: 15000,
+};
+
+export const FILE_LIMITS = {
+  MAX_READ_SIZE: 50 * 1024 * 1024, // 50MB
+  MAX_WRITE_SIZE: 100 * 1024 * 1024, // 100MB
+  CHUNK_SIZE: 64 * 1024, // 64KB chunks for large files
+};
+
+export const FILE_ENCODINGS = [
+  'utf8', 'utf-8', 'ascii', 'latin1', 'binary', 'hex', 'base64'
+];
+
+export const FILE_OPERATIONS = {
+  COPY: 'copy',
+  MOVE: 'move',
+  DELETE: 'delete',
+};
+
+export const DIRECTORY_OPERATIONS = {
+  CREATE: 'create',
+  LIST: 'list',
+  DELETE: 'delete',
+  EXISTS: 'exists',
 };

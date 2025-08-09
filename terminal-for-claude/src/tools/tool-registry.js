@@ -2,6 +2,10 @@ import { ExecuteCommandTool } from "./execute-command.js";
 import { ExecuteScriptTool } from "./execute-script.js";
 import { SystemInfoTool } from "./system-info.js";
 import { ListProcessesTool, KillProcessTool } from "./process-manager.js";
+import { FileReadTool } from "./file-read.js";
+import { FileWriteTool } from "./file-write.js";
+import { FileOperationsTool } from "./file-operations.js";
+import { DirectoryOperationsTool } from "./directory-operations.js";
 import { McpError, ErrorCode } from "@modelcontextprotocol/sdk/types.js";
 
 export class ToolRegistry {
@@ -17,6 +21,12 @@ export class ToolRegistry {
     this.register(new SystemInfoTool());
     this.register(new ListProcessesTool());
     this.register(new KillProcessTool());
+    
+    // Register file operation tools
+    this.register(new FileReadTool());
+    this.register(new FileWriteTool());
+    this.register(new FileOperationsTool());
+    this.register(new DirectoryOperationsTool());
   }
 
   register(tool) {

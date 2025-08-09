@@ -3,4 +3,8 @@ export { ExecuteCommandTool } from "./execute-command.js";
 export { ExecuteScriptTool } from "./execute-script.js";
 export { SystemInfoTool } from "./system-info.js";
 export { ListProcessesTool, KillProcessTool } from "./process-manager.js";
+export { FileReadTool } from "./file-read.js";
+export { FileWriteTool } from "./file-write.js";
+export { FileOperationsTool } from "./file-operations.js";
+export { DirectoryOperationsTool } from "./directory-operations.js";
 export { ToolRegistry } from "./tool-registry.js";

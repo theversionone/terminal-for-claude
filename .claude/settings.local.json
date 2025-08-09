@@ -8,7 +8,9 @@
       "Bash(dxt pack:*)",
       "Bash(npm test)",
       "Bash(timeout:*)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(node:*)",
+      "Bash(rm:*)"
     ],
     "deny": []
   }
