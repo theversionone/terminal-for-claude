@@ -1,257 +1,297 @@
 # Claude Terminal Desktop Extension (DXT)
 
-A comprehensive Desktop Extension for Claude that provides full terminal access and command execution capabilities. This extension allows Claude to execute shell commands, run scripts, manage processes, and access system information directly from the Claude Desktop application.
+<div align="center">
+  <img src="assets/icon.png" alt="Claude Terminal Extension Icon" width="128" height="128">
+  
+  **Full terminal access for Claude Desktop**
+  
+  [![Version](https://img.shields.io/badge/version-1.0.0-blue)](https://github.com)
+  [![Node](https://img.shields.io/badge/node-%3E%3D18.0.0-green)](https://nodejs.org)
+  [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey)](https://github.com)
+</div>
+
+## Overview
+
+A powerful Desktop Extension for Claude that provides comprehensive terminal access and command execution capabilities. Built with a modular architecture for easy extensibility and maintenance.
 
 ## 🚨 Security Warning
 
-**This extension provides Claude with full terminal access to your system.** It can execute any command, read/write files, and perform system administration tasks. Only use this extension with trusted Claude instances and be aware of the commands being executed.
+**This extension grants Claude full terminal access to your system.** It can:
+- Execute any command you can run
+- Read, write, and delete files
+- Manage processes and services
+- Access environment variables
+- Perform system administration tasks
 
-## Features
+Only use with trusted Claude instances and carefully review all commands before execution.
 
-- **Command Execution**: Execute shell commands with timeout and error handling
-- **Script Execution**: Run scripts in various interpreters (bash, PowerShell, Python, Node.js, etc.)
-- **Process Management**: List and terminate processes
-- **System Information**: Get comprehensive system details
-- **Cross-Platform**: Works on Windows, macOS, and Linux
-- **Security Features**: Configurable timeouts, buffer limits, and error handling
-- **Detailed Logging**: Comprehensive execution logs with timing information
+## ✨ Features
 
-## Prerequisites
+### Core Capabilities
+- **🖥️ Command Execution** - Run shell commands with configurable timeouts and error handling
+- **📜 Script Execution** - Execute scripts in multiple languages (Python, Node.js, Bash, PowerShell, etc.)
+- **📊 Process Management** - List, filter, and terminate running processes
+- **💻 System Information** - Retrieve comprehensive system details
+- **🌍 Cross-Platform** - Full support for Windows, macOS, and Linux
 
+### Technical Features
+- **Modular Architecture** - Clean separation of tools for easy maintenance
+- **Tool Registry System** - Dynamic tool registration and management
+- **Configuration Management** - Runtime configuration without code changes
+- **Comprehensive Error Handling** - Detailed error reporting with execution timing
+- **Security Controls** - Timeouts, buffer limits, and command validation
+
+## 📦 Installation
+
+### Prerequisites
 - Node.js 18.0.0 or higher
 - Claude Desktop application
-- DXT CLI tool for packaging
+- npm (comes with Node.js)
 
-## Installation
+### Quick Start
 
-### Step 1: Install Dependencies
-
+1. **Clone and install dependencies:**
 ```bash
 cd claude-terminal-dxt
 npm install
 ```
 
-### Step 2: Install DXT CLI (if not already installed)
-
+2. **Install DXT CLI globally:**
 ```bash
 npm install -g @anthropic/dxt
 ```
 
-### Step 3: Package the Extension
-
+3. **Package the extension:**
 ```bash
 dxt pack .
 ```
 
-This will create a `claude-terminal.dxt` file in your current directory.
+4. **Install in Claude Desktop:**
+   - Open Claude Desktop
+   - Navigate to Settings → Extensions
+   - Click "Install Extension"
+   - Select the generated `.dxt` file
+   - Confirm installation
 
-### Step 4: Install in Claude Desktop
+## 🛠️ Available Tools
 
-1. Open Claude Desktop
-2. Go to Settings → Extensions
-3. Click "Install Extension"
-4. Select the `claude-terminal.dxt` file
-5. Confirm the installation
+### 1. execute_command
+Execute shell commands with full control over execution environment.
 
-## Usage
-
-Once installed, Claude will have access to the following tools:
-
-### 1. Execute Command
-
-Execute shell commands directly:
-
+**Example:**
 ```
-Claude, run "ls -la" to list all files in the current directory
+Claude, run "git status" to check the repository status
 ```
 
-```
-Claude, execute "git status" to check the repository status
-```
+**Parameters:**
+- `command` (required) - The command to execute
+- `working_directory` - Set execution directory
+- `timeout` - Max execution time (default: 30s, max: 300s)
+- `environment` - Custom environment variables
 
-### 2. Execute Script
+### 2. execute_script
+Run scripts with specified interpreters.
 
-Run scripts with specific interpreters:
-
+**Example:**
 ```
 Claude, run this Python script:
-print("Hello from Python!")
-import sys
-print(f"Python version: {sys.version}")
+import os
+print(f"Current directory: {os.getcwd()}")
 ```
 
-```
-Claude, execute this bash script:
-#!/bin/bash
-echo "Current user: $(whoami)"
-echo "Current directory: $(pwd)"
-```
+**Supported Interpreters:**
+- `bash`, `sh` - Shell scripts
+- `powershell`, `cmd` - Windows scripts
+- `python`, `python3` - Python scripts
+- `node` - JavaScript/Node.js
+- `perl`, `ruby` - Other scripting languages
 
-### 3. System Information
+### 3. get_system_info
+Retrieve detailed system information.
 
-Get comprehensive system details:
+**Returns:**
+- Platform, architecture, and OS details
+- CPU information and core count
+- Memory usage statistics
+- Node.js version
+- Environment variables count
+- System directories
 
-```
-Claude, show me the system information
-```
+### 4. list_processes
+List and filter running processes.
 
-### 4. Process Management
+**Parameters:**
+- `filter` - Regex pattern to filter processes
+- `limit` - Max processes to return (default: 50, max: 500)
 
-List and manage processes:
+### 5. kill_process
+Terminate processes safely.
 
-```
-Claude, list all running processes containing "node"
-```
+**Parameters:**
+- `pid` (required) - Process ID to terminate
+- `force` - Force kill if normal termination fails
+- `signal` - Specific signal to send (SIGTERM, SIGKILL, etc.)
 
-```
-Claude, kill process with PID 1234
-```
+## 🏗️ Architecture
 
-## Available Tools
-
-### `execute_command`
-- **Purpose**: Execute shell commands
-- **Parameters**:
-  - `command` (required): The command to execute
-  - `working_directory` (optional): Working directory for execution
-  - `timeout` (optional): Timeout in milliseconds (default: 30000, max: 300000)
-  - `environment` (optional): Environment variables
-
-### `execute_script`
-- **Purpose**: Execute scripts with specific interpreters
-- **Parameters**:
-  - `script_content` (required): The script content
-  - `interpreter` (required): bash, sh, powershell, cmd, python, python3, node, perl, ruby
-  - `working_directory` (optional): Working directory for execution
-  - `timeout` (optional): Timeout in milliseconds (default: 60000)
-
-### `get_system_info`
-- **Purpose**: Get system information
-- **Parameters**: None
-
-### `list_processes`
-- **Purpose**: List running processes
-- **Parameters**:
-  - `filter` (optional): Filter for process names (regex supported)
-  - `limit` (optional): Limit number of processes (default: 50, max: 500)
-
-### `kill_process`
-- **Purpose**: Terminate processes
-- **Parameters**:
-  - `pid` (required): Process ID to terminate
-  - `force` (optional): Force kill the process
-  - `signal` (optional): Signal to send (SIGTERM, SIGKILL, etc.)
-
-## Configuration
-
-The extension includes several built-in security measures:
-
-- **Timeouts**: Commands have configurable timeouts to prevent hanging
-- **Buffer Limits**: Output is limited to 10MB to prevent memory issues
-- **Error Handling**: Comprehensive error reporting and graceful failures
-- **Process Safety**: Process termination includes safety checks
-- **Temporary Files**: Script execution uses secure temporary files that are automatically cleaned up
-
-## Development
-
-### Project Structure
+The extension uses a modular architecture for maintainability and extensibility:
 
 ```
 claude-terminal-dxt/
-├── manifest.json          # DXT extension manifest
-├── package.json          # Node.js dependencies
-├── README.md            # This file
 ├── src/
-│   └── server.js        # MCP server implementation
-└── test/
-    └── test.js          # Basic test suite
+│   ├── server.js              # Main MCP server
+│   ├── tools/                 # Tool implementations
+│   │   ├── base-tool.js       # Base class for all tools
+│   │   ├── tool-registry.js   # Dynamic tool registration
+│   │   ├── execute-command.js # Command execution tool
+│   │   ├── execute-script.js  # Script execution tool
+│   │   ├── system-info.js     # System information tool
+│   │   └── process-manager.js # Process management tools
+│   ├── utils/                 # Utility functions
+│   │   └── command-utils.js   # Command execution helpers
+│   └── config/                # Configuration
+│       ├── constants.js       # Application constants
+│       └── config-manager.js  # Runtime configuration
+├── assets/
+│   └── icon.png              # Extension icon
+├── manifest.json             # Extension manifest
+└── package.json              # Dependencies
 ```
+
+## 🔧 Configuration
+
+The extension supports runtime configuration via `~/.claude-terminal/config.json`:
+
+```json
+{
+  "maxBufferSize": 10485760,
+  "defaultTimeout": 30000,
+  "maxTimeout": 300000,
+  "securityMode": "standard",
+  "commandWhitelist": [],
+  "commandBlacklist": [],
+  "enableLogging": true
+}
+```
+
+### Security Modes
+- **standard** - Normal operation with blacklist checking
+- **strict** - Only whitelisted commands allowed
+
+## 👨‍💻 Development
+
+### Adding New Tools
+
+1. Create a new tool class extending `BaseTool`:
+```javascript
+// src/tools/my-tool.js
+import { BaseTool } from "./base-tool.js";
+
+export class MyTool extends BaseTool {
+  constructor() {
+    super("my_tool", "Tool description", inputSchema);
+  }
+  
+  async run(args) {
+    // Implementation
+  }
+}
+```
+
+2. Register in the tool registry
+3. Export from index.js
+
+See [DEVELOPER.md](DEVELOPER.md) for detailed development guide.
 
 ### Testing
 
-Run basic tests:
-
+Run the test suite:
 ```bash
 npm test
 ```
 
-Test the server directly:
-
+Run server in debug mode:
 ```bash
 npm run dev
 ```
 
-### Building for Distribution
+## 🔒 Security Considerations
 
-1. Ensure all dependencies are installed:
-   ```bash
-   npm install --production
-   ```
+### Risks
+- **Full System Access** - Can execute any command the user can run
+- **File System Access** - Complete read/write/delete capabilities
+- **Network Access** - Can make network connections
+- **Process Control** - Can start and stop processes
+- **Environment Access** - Can read all environment variables
 
-2. Package the extension:
-   ```bash
-   dxt pack .
-   ```
+### Best Practices
+1. **Review Commands** - Always review before execution
+2. **Use Whitelisting** - Enable strict mode for production
+3. **Monitor Logs** - Check execution logs regularly
+4. **Limit Scope** - Use working directories to restrict access
+5. **Regular Updates** - Keep extension updated for security patches
 
-3. The resulting `.dxt` file can be distributed and installed by users.
+## 📝 License
 
-## Troubleshooting
+MIT License - see LICENSE file for details
+
+## 🤝 Contributing
+
+Contributions are welcome! Please:
+1. Follow the existing code structure
+2. Add tests for new functionality
+3. Update documentation
+4. Test on multiple platforms
+5. Follow security best practices
+
+## 📚 Resources
+
+- [DXT Documentation](https://github.com/anthropics/dxt)
+- [MCP Protocol Specification](https://modelcontextprotocol.io)
+- [Installation Guide](INSTALL.md)
+- [Developer Guide](DEVELOPER.md)
+
+## 🐛 Troubleshooting
 
 ### Common Issues
 
-1. **Permission Denied**: Ensure Claude has necessary permissions to execute commands
-2. **Command Not Found**: Verify the command/interpreter is installed and in PATH
-3. **Timeout Errors**: Increase timeout values for long-running commands
-4. **Buffer Overflow**: Large outputs may be truncated (10MB limit)
+**Permission Denied**
+- Ensure Claude has necessary permissions
+- Check file/directory ownership
 
-### Debug Mode
+**Command Not Found**
+- Verify command is installed
+- Check PATH environment variable
 
-Run the server in debug mode:
+**Timeout Errors**
+- Increase timeout for long operations
+- Check for hanging processes
 
-```bash
-npm run dev
-```
+**Large Output Truncated**
+- Output limited to 10MB
+- Consider writing to file instead
 
-This will start the server with Node.js inspector for debugging.
+## 📊 Version History
 
-### Logs
+### v1.0.0 (Current)
+- ✅ Modular architecture with tool registry
+- ✅ Enhanced error handling and reporting
+- ✅ Configuration management system
+- ✅ Cross-platform compatibility
+- ✅ Comprehensive security controls
+- ✅ Five core tools for terminal access
 
-The server logs errors to stderr. Check the Claude Desktop console or terminal for detailed error messages.
+### Planned Features
+- 🔄 File operation tools
+- 🔄 Network diagnostic tools  
+- 🔄 Service management
+- 🔄 Git integration
+- 🔄 Package manager support
 
-## Security Considerations
+---
 
-This extension provides powerful capabilities that come with security implications:
-
-1. **Full System Access**: Can execute any command the user can run
-2. **File System Access**: Can read, write, and delete files
-3. **Network Access**: Can make network requests and connections
-4. **Process Control**: Can start and terminate processes
-5. **Environment Access**: Can read environment variables and system information
-
-### Best Practices
-
-1. **Review Commands**: Always review commands before execution
-2. **Limit Scope**: Use working directories to limit command scope
-3. **Monitor Usage**: Keep track of what commands are being executed
-4. **Regular Updates**: Keep the extension updated for security patches
-5. **Backup Data**: Ensure important data is backed up before running destructive commands
-
-## License
-
-MIT License - see LICENSE file for details.
-
-## Support
-
-For issues and support:
-1. Check the troubleshooting section above
-2. Review the DXT documentation at https://github.com/anthropics/dxt
-3. File issues at the appropriate repository
-
-## Version History
-
-- **1.0.0**: Initial release with full terminal access capabilities
-  - Command execution with timeout and error handling
-  - Script execution for multiple interpreters
-  - Process management and system information
-  - Cross-platform compatibility
-  - Security features and comprehensive logging
+<div align="center">
+  <strong>Built with security and extensibility in mind</strong>
+  <br>
+  Use responsibly • Review commands • Stay secure
+</div>
